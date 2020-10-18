@@ -219,6 +219,7 @@
         "MOM_GameType_Ahop" "Ahop"
         "MOM_GameType_Parkour" "Parkour"
         "MOM_GameType_Conc" "Conc"
+        "MOM_GameType_Defrag" "Defrag"
 
         // Map Info Dialog
         "MOM_MapSelector_InfoDialog_Gamemode" "Gamemode:"
