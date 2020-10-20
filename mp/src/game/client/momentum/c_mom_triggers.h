@@ -34,6 +34,8 @@ public:
     int DrawModel(int flags) override;
     bool IsTwoPass() override { return true; }
     bool IsTransparent() override { return true; }
+    void Spawn() override;
+    void Precache() override;
 
     int m_iTrackNumber;
 

@@ -13,6 +13,8 @@
 
 #include "tier0/memdbgon.h"
 
+#define MOM_ZONE_DRAW_MATERIAL "momentum/zone_outline"
+
 enum ZoneDrawMode_t
 {
     MOM_ZONE_DRAW_MODE_NONE = 0,
@@ -74,7 +76,7 @@ bool CTriggerOutlineRenderer::RenderBrushModelSurface(IClientEntity* pBaseEntity
     bool bDrawingFace = m_iRenderMode == MOM_ZONE_DRAW_MODE_FACES_BRUSH || m_iRenderMode == MOM_ZONE_DRAW_MODE_FACES_OVERLAY;
     CMeshBuilder builder;
     builder.Begin(pRenderContext->GetDynamicMesh(true, nullptr, nullptr, 
-                  materials->FindMaterial("momentum/zone_outline", TEXTURE_GROUP_OTHER)),
+                  materials->FindMaterial(MOM_ZONE_DRAW_MATERIAL, TEXTURE_GROUP_OTHER)),
                   bDrawingFace ? MATERIAL_POLYGON : MATERIAL_LINE_LOOP, vertices);
 
     int iAlpha = bDrawingFace && mom_zone_draw_alpha_override_toggle.GetBool() ? mom_zone_draw_faces_alpha_override.GetInt() : m_Color.a();
@@ -114,7 +116,7 @@ void C_BaseMomZoneTrigger::DrawOutlineModel()
     Color outlineColor = m_ZoneModelRenderer.m_Color;
 
     CMatRenderContextPtr pRenderContext(materials);
-    IMesh *pMesh = pRenderContext->GetDynamicMesh(true, nullptr, nullptr, materials->FindMaterial("momentum/zone_outline", TEXTURE_GROUP_OTHER));
+    IMesh *pMesh = pRenderContext->GetDynamicMesh(true, nullptr, nullptr, materials->FindMaterial(MOM_ZONE_DRAW_MATERIAL, TEXTURE_GROUP_OTHER));
     CMeshBuilder builder;
 
     // Bottom
@@ -166,7 +168,7 @@ void C_BaseMomZoneTrigger::DrawSideFacesModelAsBrush()
     int faceAlpha = mom_zone_draw_alpha_override_toggle.GetBool() ? mom_zone_draw_faces_alpha_override.GetInt() : faceColor.a();
 
     CMatRenderContextPtr pRenderContext(materials);
-    IMesh *pMesh = pRenderContext->GetDynamicMesh(true, nullptr, nullptr, materials->FindMaterial("momentum/zone_outline", TEXTURE_GROUP_OTHER));
+    IMesh *pMesh = pRenderContext->GetDynamicMesh(true, nullptr, nullptr, materials->FindMaterial(MOM_ZONE_DRAW_MATERIAL, TEXTURE_GROUP_OTHER));
     CMeshBuilder builder;
 
     for (int i = 0; i < iNum; i++)
@@ -271,6 +273,18 @@ int C_BaseMomZoneTrigger::DrawModel(int flags)
         return 1;
 
     return BaseClass::DrawModel(flags);
+}
+
+void C_BaseMomZoneTrigger::Spawn()
+{
+    BaseClass::Spawn();
+    Precache();
+}
+
+void C_BaseMomZoneTrigger::Precache()
+{
+    BaseClass::Precache();
+    PrecacheMaterial(MOM_ZONE_DRAW_MATERIAL);
 }
 
 LINK_ENTITY_TO_CLASS(trigger_momentum_timer_start, C_TriggerTimerStart);
