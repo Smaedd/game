@@ -37,6 +37,8 @@ public:
     void Spawn() override;
     void Precache() override;
 
+    virtual int GetZoneType();
+
     int m_iTrackNumber;
 
     CUtlVector<Vector> m_vecZonePoints;
@@ -54,6 +56,7 @@ class C_TriggerTimerStart : public C_BaseMomZoneTrigger
 
     bool GetDrawColor() override;
     int GetDrawMode() override;
+    int GetZoneType() override;
 };
 
 class C_TriggerTimerStop : public C_BaseMomZoneTrigger
@@ -64,6 +67,7 @@ class C_TriggerTimerStop : public C_BaseMomZoneTrigger
 
     bool GetDrawColor() override;
     int GetDrawMode() override;
+    int GetZoneType() override;
 };
 
 class C_TriggerStage : public C_BaseMomZoneTrigger
@@ -74,6 +78,7 @@ public:
 
     bool GetDrawColor() override;
     int GetDrawMode() override;
+    int GetZoneType() override;
 };
 
 class C_TriggerCheckpoint : public C_BaseMomZoneTrigger
@@ -84,6 +89,7 @@ public:
 
     bool GetDrawColor() override;
     int GetDrawMode() override;
+    int GetZoneType() override;
 };
 
 class C_TriggerTrickZone : public C_BaseMomZoneTrigger
@@ -96,6 +102,7 @@ public:
 
     bool GetDrawColor() override;
     int GetDrawMode() override;
+    int GetZoneType() override;
 
     void OnDataChanged(DataUpdateType_t type) override;
 
